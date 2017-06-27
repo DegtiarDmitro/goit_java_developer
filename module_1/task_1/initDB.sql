@@ -111,39 +111,72 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `work_relationship`.`project_realization`
+-- Table `work_relationship`.`developers_projects`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `work_relationship`.`project_realization` (
-  `project_id` INT NOT NULL,
-  `company_id` INT NOT NULL,
-  `customer_id` INT NOT NULL,
-  `developer_id` INT NOT NULL,
-  INDEX `FK_ID_PROJECTS_PROJECTS_idx` (`project_id` ASC),
-  INDEX `FK_ID_COMPANIES_COMPANIES_idx` (`company_id` ASC),
-  INDEX `FK_ID_CUSTOMERS_CUSTOMERS_idx` (`customer_id` ASC),
-  PRIMARY KEY (`project_id`, `company_id`, `customer_id`, `developer_id`),
-  INDEX `FK_ID_DEVELOPERS_DEVELOPERS_idx` (`developer_id` ASC),
-  CONSTRAINT `FK_ID_PROJECTS_PROJECTS`
-    FOREIGN KEY (`project_id`)
-    REFERENCES `work_relationship`.`projects` (`id_projects`)
+CREATE TABLE IF NOT EXISTS `work_relationship`.`developers_projects` (
+  `developers_id_developers` INT(11) NOT NULL,
+  `projects_id_projects` INT(11) NOT NULL,
+  PRIMARY KEY (`developers_id_developers`, `projects_id_projects`),
+  INDEX `fk_developers_has_projects_projects1_idx` (`projects_id_projects` ASC),
+  INDEX `fk_developers_has_projects_developers1_idx` (`developers_id_developers` ASC),
+  CONSTRAINT `fk_developers_has_projects_developers1`
+    FOREIGN KEY (`developers_id_developers`)
+    REFERENCES `work_relationship`.`developers` (`id_developers`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `FK_ID_COMPANIES_COMPANIES`
-    FOREIGN KEY (`company_id`)
+  CONSTRAINT `fk_developers_has_projects_projects1`
+    FOREIGN KEY (`projects_id_projects`)
+    REFERENCES `work_relationship`.`projects` (`id_projects`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `work_relationship`.`companies_projects`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `work_relationship`.`companies_projects` (
+  `companies_id_companies` INT(11) NOT NULL,
+  `projects_id_projects` INT(11) NOT NULL,
+  PRIMARY KEY (`companies_id_companies`, `projects_id_projects`),
+  INDEX `fk_companies_has_projects_projects1_idx` (`projects_id_projects` ASC),
+  INDEX `fk_companies_has_projects_companies1_idx` (`companies_id_companies` ASC),
+  CONSTRAINT `fk_companies_has_projects_companies1`
+    FOREIGN KEY (`companies_id_companies`)
     REFERENCES `work_relationship`.`companies` (`id_companies`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `FK_ID_CUSTOMERS_CUSTOMERS`
-    FOREIGN KEY (`customer_id`)
+  CONSTRAINT `fk_companies_has_projects_projects1`
+    FOREIGN KEY (`projects_id_projects`)
+    REFERENCES `work_relationship`.`projects` (`id_projects`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `work_relationship`.`customers_projects`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `work_relationship`.`customers_projects` (
+  `customers_id_customers` INT(11) NOT NULL,
+  `projects_id_projects` INT(11) NOT NULL,
+  PRIMARY KEY (`customers_id_customers`, `projects_id_projects`),
+  INDEX `fk_customers_has_projects_projects1_idx` (`projects_id_projects` ASC),
+  INDEX `fk_customers_has_projects_customers1_idx` (`customers_id_customers` ASC),
+  CONSTRAINT `fk_customers_has_projects_customers1`
+    FOREIGN KEY (`customers_id_customers`)
     REFERENCES `work_relationship`.`customers` (`id_customers`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `FK_ID_DEVELOPERS_DEVELOPERS`
-    FOREIGN KEY (`developer_id`)
-    REFERENCES `work_relationship`.`developers` (`id_developers`)
+  CONSTRAINT `fk_customers_has_projects_projects1`
+    FOREIGN KEY (`projects_id_projects`)
+    REFERENCES `work_relationship`.`projects` (`id_projects`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
