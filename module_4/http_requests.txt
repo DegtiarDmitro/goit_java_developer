@@ -1,0 +1,61 @@
+1. Есть веб страница, которая расположена по доменному адресу www.example.com. 
+Написать HTTP запрос который будет отправлен браузером при загрузке этого сайта.
+	GET / HTTP/1.1
+	Host: www.example.com
+	
+2. Дано поисковый сервер на доменном адресе search.com. 
+Поиск осуществляется с помощью отправки HTTP GET запроса, где слова поиска задаются параметрами запроса. Написать запрос.
+	GET /?q=search+information HTTP/1.1
+	Host: search.com
+	
+3. Для задания 2 написать запрос который ищет предложение "I want to buy a flat"
+	GET /?q=I+want+to+buy+a+flat HTTP/1.1
+	Host: search.com
+	
+4. Написать HTTP запрос который будет отправлен на сейвер buyme.com когда пользователь нажмет кпопку "купить".
+	GET /basket/buy/ HTTP/1.1
+	Host: buyme.com
+	или
+	GET /?action=buy HTTP/1.1
+	Host: buyme.com
+
+6. Написать вид ответа сервера в случае: все хорошо, ресурс не найдет, 
+ресурс найден но надо перенаправить на другой ресурс, запрашиваемый HTTP метод сервером на поддерживается, внутренняя ошибка.
+	a) HTTP/1.1 200 OK
+	b)HTTP/1.1 404 Not Found
+	c)HTTP/1.1 302 Found
+		Location:...
+	d)HTTP/1.1 501 Not Implemented
+	e)HTTP/1.1 500 Internal Server Error
+	
+7. Написать запрос GET на сервер example.com который говорит серверу за закрывать соеденение.
+	GET / HTTP/1.1
+	Host: example.com
+	Connection: close
+
+8. Написать запрос GET на сервер example.com в котором передается сессия через сookie
+	GET / HTTP/1.1
+	Host: example.com
+	Cookie: name=value;JSESSIONID=some_id;
+
+9. У вас есть логин форма с полями: username, password. Написать HTTP запрос который будет отправлен на auth.com/login для входа пользователя.
+	POST /login HTTP/1.1
+	Host: auth.com
+	Content-Type: application/x-www-form-urlencoded
+	Content-Length: 27
+	
+	username=test&password=test
+
+10. Написать запрос который будет отправлен серверу при загрузке файла file.txt на сейчас upload.com
+	POST / HTTP/1.1
+	Host: upload.com
+	Content-Type: multipart/form-data; boundary=---------------------------226134112593
+	Content-Length: 188
+	
+	-----------------------------226134112593
+	Content-Disposition: form-data; name="userfile"; filename="file.txt"
+	Content-Type: text/plain
+
+
+	-----------------------------226134112593--
+	
